@@ -1,26 +1,18 @@
+#!/usr/bin/ruby
+
 require "readline"
 
-/***
-  * say( filelist ) - вызывает внешнюю программу
-  * @filelist :string - список проигрываемых файлов через пробел
-  */
-def say( filelist )
-  temp = fork{ exec "mplayer #{filelist}" }
-end
+arr_gl = ['a', 'e', 'i', 'o', 'u', 'y']
+arr_sg = ('a'...'z').to_a - arr_gl
+hello = "Введите число символов в пароле > "
+pass = ''
+pass_lng = Readline.readline(hello, true).to_i
 
-dir = 'sound/'
-list = ''
-hello = "Данная скрипт расчитан под оперционную систему Linux.\n\
-Для его работы необходима программа mplayer.\n\
-Введите длину пароля цифрами > "
-lng = Readline.readline( hello, true ).to_i
-ar = ( lng < 9 ) ? (0..9).to_a : (0..9).to_a+('a'..'z').to_a
-
-if (lng == 0) then
-  puts "Длина не задана." 
+if pass_lng < 1
+  puts "Длинна должна быть положительным числом больше 0."
 else
-  (1..lng).each do
-    list += dir + ar[rand(ar.length)].to_s + ".mp3 "
-  end
-  say list
+  (1..pass_lng).each{ |i|
+      pass += (i%2)<1 ? arr_gl[rand(arr_gl.length)] : arr_sg[rand(arr_sg.length)] }
 end
+
+puts pass
