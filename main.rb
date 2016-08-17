@@ -1,24 +1,15 @@
-#!/usr/bin/ruby
-
 require "readline"
+require "./Password_Generator"
+require "./Say_Password"
 
-arr_gl_st = ['a', 'e', 'i', 'o', 'u', 'y']
-arr_sg_st = ('a'...'z').to_a - arr_gl_st
-arr_gl_pr = ['A', 'E', 'I', 'O', 'U', 'Y']
-arr_sg_pr = ('A'...'Z').to_a - arr_gl_pr
-hello = "Введите число символов в пароле > "
-pass = ''
-pass_lng = Readline.readline(hello, true).to_i
-
-arr_gl = arr_gl_st + arr_gl_pr
-arr_sg = arr_sg_st + arr_sg_pr
-
-
-if pass_lng < 1
-  puts "Длинна должна быть положительным числом больше 0."
-else
-  (1..pass_lng).each{ |i|
-      pass += (i%2)<1 ? arr_gl[rand(arr_gl.length)] : arr_sg[rand(arr_sg.length)] }
-end
-
-puts pass
+hello = 
+  "Данная скрипт расчитан под оперционную систему Linux.\n" \
+  "Для его работы необходима программа mplayer.\n" \
+  "Введите длину пароля цифрами > "
+passwd_lng = Readline.readline(hello, true).to_i
+#passwd_lng = 11
+passwd_gen = Password_Generator.new(passwd_lng)
+passwd_gen.generating_password
+passwd_gen.print_password
+say = Say_Password.new(passwd_gen.get_password)
+say.say_password
